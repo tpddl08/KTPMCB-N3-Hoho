@@ -35,8 +35,8 @@ Thực hiện kiểm thử đầy đủ 6 chức năng không bao gồm các th�
 | Đặc tả 6 chức năng đã rà soát | Bao phủ RTM từ 90% trở lên, bao phủ nhánh ba hàm hộp trắng từ 80% trở lên |
 
 ## 5. Sáu rủi ro (K x A)
-| Mã | Rủi ro | K | A | Điểm |
-|---|---|---|---|---|---|
+| Mã | Rủi ro | K | A | Mức rủi ro |
+|---|---|---|---|---|
 | R01 | Xem được bài làm hoặc điểm của người khác do phân quyền sai | 2 | 5 | 10 |
 | R02 | Quiz chấm sai khi câu hỏi số có làm tròn hoặc đáp án nhiều phần | 3 | 4 | 12 |
 | R03 | Nội dung HTML trong khóa học hoặc diễn đàn chứa mã kịch bản (XSS) | 3 | 4 | 12 |
