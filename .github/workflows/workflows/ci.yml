@@ -1,0 +1,45 @@
+# Thực hành 9.3 – chạy kiểm thử đơn vị sau mỗi lần đẩy mã / tạo pull request (mục 9.5 giáo trình).
+# Kho này chứa nhiều dự án nên mỗi job đặt working-directory; trong kho riêng của nhóm, bỏ dòng đó nếu dự án nằm ở gốc.
+name: CI
+on: [push, pull_request]
+
+jobs:
+  java-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: java/edureg-java
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Chạy kiểm thử đơn vị
+        run: mvn -B test
+      - name: Lưu báo cáo kiểm thử và độ bao phủ
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bao-cao-kiem-thu-java
+          path: |
+            java/edureg-java/target/surefire-reports/
+            java/edureg-java/target/site/jacoco/
+
+  dotnet-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'   # trùng với TargetFramework trong .csproj (net8.0 → '8.0.x')
+      - name: Chạy kiểm thử NUnit
+        working-directory: dotnet
+        run: dotnet test --logger "trx" --collect:"XPlat Code Coverage"
+      - name: Lưu kết quả
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bao-cao-kiem-thu-dotnet
+          path: dotnet/**/TestResults/
